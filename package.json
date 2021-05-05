@@ -2,7 +2,7 @@
   "name": "graphpruffercodes",
   "version": "1.0.0",
   "description": "from-scratch real-time random tree embedding with Pruffer code generation",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel src/index.html",

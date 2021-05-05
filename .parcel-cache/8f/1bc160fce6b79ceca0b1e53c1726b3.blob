@@ -1,0 +1,134 @@
+var _graphJs = require("./graph.js");
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _graphJsDefault = _parcelHelpers.interopDefault(_graphJs);
+var _codeFromGraphJs = require("./codeFromGraph.js");
+var canv = document.getElementById("myCanvas");
+var context = canv.getContext("2d");
+var rect = canv.getBoundingClientRect();
+var graph = new _graphJsDefault.default();
+let code = document.getElementById("code");
+var buttonVertex = document.getElementById("addVertex");
+buttonVertex.onclick = function () {
+  graph.addVertex();
+  updateCode();
+};
+var buttonVertexRemove = document.getElementById("removeVertex");
+buttonVertexRemove.onclick = function () {
+  graph.removeVertex();
+  updateCode();
+};
+var generateMany = document.getElementById("generateMany");
+generateMany.oninput = function () {
+  graph.nodes = [];
+  graph.edges = [];
+  graph.encoding = [];
+  let number = generateMany.value;
+  for (var i = 0; i < number; i++) {
+    graph.addVertex();
+  }
+  updateCode();
+};
+for (var i = 0; i < 10; i++) {
+  graph.addVertex();
+}
+var updateCode = () => {
+  code.innerHTML = "<strong>Pruffer Code: </strong>" + _codeFromGraphJs.codeFromGraph(graph);
+};
+var drawNodes = function (graph, context) {
+  graph.nodes.forEach(function (node) {
+    context.beginPath();
+    context.fillStyle = "black";
+    context.arc(node.x, node.y, 5, 0, 2 * Math.PI);
+    context.fill();
+    context.closePath();
+    context.font = "14px Arial";
+    context.fillText(node.id, node.x + 5, node.y - 5);
+    context.fillStyle = "red";
+    context.font = "20px Arial";
+    context.fillText(node.degree, node.x - 20, node.y + 20);
+  });
+};
+var drawEdges = function (graph, context) {
+  graph.edges.forEach(function (edge) {
+    context.beginPath();
+    context.strokeStyle = "black";
+    context.moveTo(edge.node1.x, edge.node1.y);
+    context.lineTo(edge.node2.x, edge.node2.y);
+    context.stroke();
+  });
+};
+var update = () => {
+  graph.edges.forEach(function (edge) {
+    if (edge.node1 == undefined || edge.node2 == undefined) {
+      console.log("undefined edge");
+      return;
+    }
+    if (edge.node1.x == edge.node2.x && edge.node1.y == edge.node2.y) {
+      console.log("invalid edge encountered");
+      return;
+    }
+    let radiusx = edge.node2.x - edge.node1.x;
+    let radiusy = edge.node2.y - edge.node1.y;
+    let distance = Math.sqrt(radiusx * radiusx + radiusy * radiusy);
+    if (distance == 0) {
+      console.log("zero distance encountered");
+    }
+    let unitradiusx = radiusx / distance;
+    let unitradiusy = radiusy / distance;
+    let minusradiusx = -1 * unitradiusx;
+    let minusradiusy = -1 * unitradiusy;
+    var c1 = 0.2;
+    var c2 = 40;
+    edge.node1.nextX += unitradiusx * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node1.nextY += unitradiusy * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node2.nextX += minusradiusx * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node2.nextY += minusradiusy * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+  });
+  for (var i = 0; i < graph.nodes.length; i++) {
+    for (var j = 0; j < graph.nodes.length; j++) {
+      if (i == j) continue;
+      let node = graph.nodes[i];
+      let node2 = graph.nodes[j];
+      if (node == undefined || node2 == undefined) {
+        console.log("undefined edge");
+        return;
+      }
+      let radiusx = node.x - node2.x;
+      let radiusy = node.y - node2.y;
+      let distance = Math.sqrt(radiusx * radiusx + radiusy * radiusy);
+      let unitradiusx = radiusx / distance;
+      let unitradiusy = radiusy / distance;
+      let magnitude = 1000 / distance;
+      node.nextX += unitradiusx * magnitude * 1 / 60;
+      node.nextY += unitradiusy * magnitude * 1 / 60;
+    }
+  }
+  for (var i = 0; i < graph.nodes.length; i++) {
+    graph.nodes[i].x = graph.nodes[i].nextX;
+    graph.nodes[i].y = graph.nodes[i].nextY;
+  }
+};
+var draw = () => {
+  context.save();
+  context.setTransform();
+  context.clearRect(0, 0, canv.width, canv.height);
+  context.restore();
+  drawNodes(graph, context);
+  drawEdges(graph, context);
+  if (graph.edges.length != graph.nodes.length - 1) {
+    console.log("invalid graph construction " + graph.edges.length);
+  }
+};
+var updateNDraw = function () {
+  update();
+  draw();
+  requestAnimationFrame(updateNDraw);
+};
+// function mainLoop() {
+// setTimeout(updateNDraw, 1000 / 60);
+// }
+var translateX = canv.width / 2;
+var translateY = canv.height / 2;
+var scale = 1;
+context.translate(translateX, translateY);
+updateNDraw();

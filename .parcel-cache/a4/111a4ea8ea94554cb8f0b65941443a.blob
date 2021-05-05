@@ -1,0 +1,81 @@
+html,
+body {
+  touch-action: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  overflow: hidden;
+  font-family: "Lato";
+}
+
+#controls {
+  display: flex;
+  height: 25%;
+  width: 15%;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 40%;
+  left: 2%;
+}
+.controls {
+  font-size: large;
+  border-radius: 20px;
+  border: rgb(51, 51, 51) solid 1px;
+  background-color: rgb(226, 240, 217);
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  z-index: 1;
+}
+#controls p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.controls:active {
+  border: 2px black solid;
+}
+
+#addVertex {
+}
+#removeVertex {
+}
+
+#generateMany {
+  height: 40px;
+  line-height: 40px;
+  padding: 0px;
+  display: inline-block;
+}
+#generateMany:focus {
+  border: 2px black solid;
+  outline-width: 0;
+}
+#generateMany:first-line {
+  display: inline-block;
+}
+
+#code {
+  text-align: center;
+  font-family: "Courier New";
+  position: absolute;
+  top: 0;
+  margin-left: 1%;
+}
+
+::placeholder {
+  opacity: 0.5;
+}
+
+#myCanvas {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}

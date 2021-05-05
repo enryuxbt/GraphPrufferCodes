@@ -1,0 +1,923 @@
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+
+(function(modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
+
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
+
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        this
+      );
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x) {
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function(id, exports) {
+    modules[id] = [
+      function(require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
+  };
+
+  Object.defineProperty(newRequire, 'root', {
+    get: function() {
+      return globalObject[parcelRequireName];
+    },
+  });
+
+  globalObject[parcelRequireName] = newRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function() {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"21c8X":[function(require,module,exports) {
+var HMR_HOST = null;
+var HMR_PORT = 1234;
+var HMR_SECURE = false;
+var HMR_ENV_HASH = "d751713988987e9331980363e24189ce";
+module.bundle.HMR_BUNDLE_ID = "062e9a7565ca912a5f7d6b832142d36c";
+// @flow
+/*global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE*/
+/*::
+import type {
+HMRAsset,
+HMRMessage,
+} from '@parcel/reporter-dev-server/src/HMRServer.js';
+interface ParcelRequire {
+(string): mixed;
+cache: {|[string]: ParcelModule|};
+hotData: mixed;
+Module: any;
+parent: ?ParcelRequire;
+isParcelRequire: true;
+modules: {|[string]: [Function, {|[string]: string|}]|};
+HMR_BUNDLE_ID: string;
+root: ParcelRequire;
+}
+interface ParcelModule {
+hot: {|
+data: mixed,
+accept(cb: (Function) => void): void,
+dispose(cb: (mixed) => void): void,
+// accept(deps: Array<string> | string, cb: (Function) => void): void,
+// decline(): void,
+_acceptCallbacks: Array<(Function) => void>,
+_disposeCallbacks: Array<(mixed) => void>,
+|};
+}
+declare var module: {bundle: ParcelRequire, ...};
+declare var HMR_HOST: string;
+declare var HMR_PORT: string;
+declare var HMR_ENV_HASH: string;
+declare var HMR_SECURE: boolean;
+*/
+var OVERLAY_ID = '__parcel__error__overlay__';
+var OldModule = module.bundle.Module;
+function Module(moduleName) {
+  OldModule.call(this, moduleName);
+  this.hot = {
+    data: module.bundle.hotData,
+    _acceptCallbacks: [],
+    _disposeCallbacks: [],
+    accept: function (fn) {
+      this._acceptCallbacks.push(fn || (function () {}));
+    },
+    dispose: function (fn) {
+      this._disposeCallbacks.push(fn);
+    }
+  };
+  module.bundle.hotData = undefined;
+}
+module.bundle.Module = Module;
+var checkedAssets, /*: {|[string]: boolean|}*/
+acceptedAssets, /*: {|[string]: boolean|}*/
+/*: {|[string]: boolean|}*/
+assetsToAccept;
+function getHostname() {
+  return HMR_HOST || (location.protocol.indexOf('http') === 0 ? location.hostname : 'localhost');
+}
+function getPort() {
+  return HMR_PORT || location.port;
+}
+// eslint-disable-next-line no-redeclare
+var parent = module.bundle.parent;
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+  var hostname = getHostname();
+  var port = getPort();
+  var protocol = HMR_SECURE || location.protocol == 'https:' && !(/localhost|127.0.0.1|0.0.0.0/).test(hostname) ? 'wss' : 'ws';
+  var ws = new WebSocket(protocol + '://' + hostname + (port ? ':' + port : '') + '/');
+  // $FlowFixMe
+  ws.onmessage = function (event) /*: {data: string, ...}*/
+  {
+    checkedAssets = {
+      /*: {|[string]: boolean|}*/
+    };
+    acceptedAssets = {
+      /*: {|[string]: boolean|}*/
+    };
+    assetsToAccept = [];
+    var data = /*: HMRMessage*/
+    JSON.parse(event.data);
+    if (data.type === 'update') {
+      // Remove error overlay if there is one
+      removeErrorOverlay();
+      let assets = data.assets.filter(asset => asset.envHash === HMR_ENV_HASH);
+      // Handle HMR Update
+      var handled = false;
+      assets.forEach(asset => {
+        var didAccept = asset.type === 'css' || asset.type === 'js' && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
+        if (didAccept) {
+          handled = true;
+        }
+      });
+      if (handled) {
+        console.clear();
+        assets.forEach(function (asset) {
+          hmrApply(module.bundle.root, asset);
+        });
+        for (var i = 0; i < assetsToAccept.length; i++) {
+          var id = assetsToAccept[i][1];
+          if (!acceptedAssets[id]) {
+            hmrAcceptRun(assetsToAccept[i][0], id);
+          }
+        }
+      } else {
+        window.location.reload();
+      }
+    }
+    if (data.type === 'error') {
+      // Log parcel errors to console
+      for (let ansiDiagnostic of data.diagnostics.ansi) {
+        let stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
+        console.error('🚨 [parcel]: ' + ansiDiagnostic.message + '\n' + stack + '\n\n' + ansiDiagnostic.hints.join('\n'));
+      }
+      // Render the fancy html overlay
+      removeErrorOverlay();
+      var overlay = createErrorOverlay(data.diagnostics.html);
+      // $FlowFixMe
+      document.body.appendChild(overlay);
+    }
+  };
+  ws.onerror = function (e) {
+    console.error(e.message);
+  };
+  ws.onclose = function (e) {
+    if (undefined !== 'test') {
+      console.warn('[parcel] 🚨 Connection to the HMR server was lost');
+    }
+  };
+}
+function removeErrorOverlay() {
+  var overlay = document.getElementById(OVERLAY_ID);
+  if (overlay) {
+    overlay.remove();
+    console.log('[parcel] ✨ Error resolved');
+  }
+}
+function createErrorOverlay(diagnostics) {
+  var overlay = document.createElement('div');
+  overlay.id = OVERLAY_ID;
+  let errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
+  for (let diagnostic of diagnostics) {
+    let stack = diagnostic.codeframe ? diagnostic.codeframe : diagnostic.stack;
+    errorHTML += `
+      <div>
+        <div style="font-size: 18px; font-weight: bold; margin-top: 20px;">
+          🚨 ${diagnostic.message}
+        </div>
+        <pre>
+          ${stack}
+        </pre>
+        <div>
+          ${diagnostic.hints.map(hint => '<div>' + hint + '</div>').join('')}
+        </div>
+      </div>
+    `;
+  }
+  errorHTML += '</div>';
+  overlay.innerHTML = errorHTML;
+  return overlay;
+}
+function getParents(bundle, id) /*: Array<[ParcelRequire, string]>*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return [];
+  }
+  var parents = [];
+  var k, d, dep;
+  for (k in modules) {
+    for (d in modules[k][1]) {
+      dep = modules[k][1][d];
+      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
+        parents.push([bundle, k]);
+      }
+    }
+  }
+  if (bundle.parent) {
+    parents = parents.concat(getParents(bundle.parent, id));
+  }
+  return parents;
+}
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    if (link.parentNode !== null) {
+      // $FlowFixMe
+      link.parentNode.removeChild(link);
+    }
+  };
+  newLink.setAttribute('href', // $FlowFixMe
+  link.getAttribute('href').split('?')[0] + '?' + Date.now());
+  // $FlowFixMe
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      // $FlowFixMe[incompatible-type]
+      var href = /*: string*/
+      links[i].getAttribute('href');
+      var hostname = getHostname();
+      var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
+      var absolute = (/^https?:\/\//i).test(href) && href.indexOf(window.location.origin) !== 0 && !servedFromHMRServer;
+      if (!absolute) {
+        updateLink(links[i]);
+      }
+    }
+    cssTimeout = null;
+  }, 50);
+}
+function hmrApply(bundle, /*: ParcelRequire*/
+asset) /*:  HMRAsset*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+  if (asset.type === 'css') {
+    reloadCSS();
+    return;
+  }
+  let deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
+  if (deps) {
+    var fn = new Function('require', 'module', 'exports', asset.output);
+    modules[asset.id] = [fn, deps];
+  } else if (bundle.parent) {
+    hmrApply(bundle.parent, asset);
+  }
+}
+function hmrAcceptCheck(bundle, /*: ParcelRequire*/
+id, /*: ParcelRequire*/
+/*: string*/
+depsByBundle) /*: ?{ [string]: { [string]: string } }*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+  if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
+    // If we reached the root bundle without finding where the asset should go,
+    // there's nothing to do. Mark as "accepted" so we don't reload the page.
+    if (!bundle.parent) {
+      return true;
+    }
+    return hmrAcceptCheck(bundle.parent, id, depsByBundle);
+  }
+  if (checkedAssets[id]) {
+    return;
+  }
+  checkedAssets[id] = true;
+  var cached = bundle.cache[id];
+  assetsToAccept.push([bundle, id]);
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    return true;
+  }
+  return getParents(module.bundle.root, id).some(function (v) {
+    return hmrAcceptCheck(v[0], v[1], null);
+  });
+}
+function hmrAcceptRun(bundle, /*: ParcelRequire*/
+id) /*: string*/
+{
+  var cached = bundle.cache[id];
+  bundle.hotData = {};
+  if (cached && cached.hot) {
+    cached.hot.data = bundle.hotData;
+  }
+  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
+    cached.hot._disposeCallbacks.forEach(function (cb) {
+      cb(bundle.hotData);
+    });
+  }
+  delete bundle.cache[id];
+  bundle(id);
+  cached = bundle.cache[id];
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    cached.hot._acceptCallbacks.forEach(function (cb) {
+      var assetsToAlsoAccept = cb(function () {
+        return getParents(module.bundle.root, id);
+      });
+      if (assetsToAlsoAccept && assetsToAccept.length) {
+        assetsToAccept.push.apply(assetsToAccept, assetsToAlsoAccept);
+      }
+    });
+  }
+  acceptedAssets[id] = true;
+}
+
+},{}],"3L8AI":[function(require,module,exports) {
+var _graphJs = require("./graph.js");
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _graphJsDefault = _parcelHelpers.interopDefault(_graphJs);
+var _codeFromGraphJs = require("./codeFromGraph.js");
+var canv = document.getElementById("myCanvas");
+var context = canv.getContext("2d");
+var rect = canv.getBoundingClientRect();
+var graph = new _graphJsDefault.default();
+let code = document.getElementById("code");
+var buttonVertex = document.getElementById("addVertex");
+buttonVertex.onclick = function () {
+  graph.addVertex();
+  updateCode();
+};
+var buttonVertexRemove = document.getElementById("removeVertex");
+buttonVertexRemove.onclick = function () {
+  graph.removeVertex();
+  updateCode();
+};
+var generateMany = document.getElementById("generateMany");
+generateMany.oninput = function () {
+  graph.nodes = [];
+  graph.edges = [];
+  graph.encoding = [];
+  let number = generateMany.value;
+  for (var i = 0; i < number; i++) {
+    graph.addVertex();
+  }
+  updateCode();
+};
+for (var i = 0; i < 10; i++) {
+  graph.addVertex();
+}
+var updateCode = () => {
+  code.innerHTML = "<strong>Pruffer Code: </strong>" + _codeFromGraphJs.codeFromGraph(graph);
+};
+var drawNodes = function (graph, context) {
+  graph.nodes.forEach(function (node) {
+    context.beginPath();
+    context.fillStyle = "black";
+    context.arc(node.x, node.y, 5, 0, 2 * Math.PI);
+    context.fill();
+    context.closePath();
+    context.font = "14px Arial";
+    context.fillText(node.id, node.x + 5, node.y - 5);
+    context.fillStyle = "red";
+    context.font = "20px Arial";
+    context.fillText(node.degree, node.x - 20, node.y + 20);
+  });
+};
+var drawEdges = function (graph, context) {
+  graph.edges.forEach(function (edge) {
+    context.beginPath();
+    context.strokeStyle = "black";
+    context.moveTo(edge.node1.x, edge.node1.y);
+    context.lineTo(edge.node2.x, edge.node2.y);
+    context.stroke();
+  });
+};
+var update = () => {
+  graph.edges.forEach(function (edge) {
+    if (edge.node1 == undefined || edge.node2 == undefined) {
+      console.log("undefined edge");
+      return;
+    }
+    if (edge.node1.x == edge.node2.x && edge.node1.y == edge.node2.y) {
+      console.log("invalid edge encountered");
+      return;
+    }
+    let radiusx = edge.node2.x - edge.node1.x;
+    let radiusy = edge.node2.y - edge.node1.y;
+    let distance = Math.sqrt(radiusx * radiusx + radiusy * radiusy);
+    if (distance == 0) {
+      console.log("zero distance encountered");
+    }
+    let unitradiusx = radiusx / distance;
+    let unitradiusy = radiusy / distance;
+    let minusradiusx = -1 * unitradiusx;
+    let minusradiusy = -1 * unitradiusy;
+    var c1 = 0.2;
+    var c2 = 40;
+    edge.node1.nextX += unitradiusx * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node1.nextY += unitradiusy * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node2.nextX += minusradiusx * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+    edge.node2.nextY += minusradiusy * (c1 * Math.log(distance / c2) + 4 * distance) * 1 / 60;
+  });
+  for (var i = 0; i < graph.nodes.length; i++) {
+    for (var j = 0; j < graph.nodes.length; j++) {
+      if (i == j) continue;
+      let node = graph.nodes[i];
+      let node2 = graph.nodes[j];
+      if (node == undefined || node2 == undefined) {
+        console.log("undefined edge");
+        return;
+      }
+      let radiusx = node.x - node2.x;
+      let radiusy = node.y - node2.y;
+      let distance = Math.sqrt(radiusx * radiusx + radiusy * radiusy);
+      let unitradiusx = radiusx / distance;
+      let unitradiusy = radiusy / distance;
+      let magnitude = 1000 / distance;
+      node.nextX += unitradiusx * magnitude * 1 / 60;
+      node.nextY += unitradiusy * magnitude * 1 / 60;
+    }
+  }
+  for (var i = 0; i < graph.nodes.length; i++) {
+    graph.nodes[i].x = graph.nodes[i].nextX;
+    graph.nodes[i].y = graph.nodes[i].nextY;
+  }
+};
+var draw = () => {
+  // context.save();
+  // context.setTransform();
+  var p1 = context.transformedPoint(0, 0);
+  var p2 = context.transformedPoint(canv.width, canv.height);
+  context.clearRect(p1.x, p1.y, p2.x, p2.y);
+  // context.restore();
+  drawNodes(graph, context);
+  drawEdges(graph, context);
+  if (graph.edges.length != graph.nodes.length - 1) {
+    console.log("invalid graph construction " + graph.edges.length);
+  }
+};
+var lastX = canv.width / 2, lastY = canv.height / 2;
+var dragStart, dragged;
+var lastX = canv.width / 2, lastY = canv.height / 2;
+var dragStart, dragged;
+canv.addEventListener("mousedown", function (evt) {
+  document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = "none";
+  lastX = evt.offsetX || evt.pageX - canv.offsetLeft;
+  lastY = evt.offsetY || evt.pageY - canv.offsetTop;
+  dragStart = context.transformedPoint(lastX, lastY);
+  dragged = false;
+}, false);
+canv.addEventListener("mousemove", function (evt) {
+  lastX = evt.offsetX || evt.pageX - canv.offsetLeft;
+  lastY = evt.offsetY || evt.pageY - canv.offsetTop;
+  dragged = true;
+  if (dragStart) {
+    var pt = context.transformedPoint(lastX, lastY);
+    context.translate(pt.x - dragStart.x, pt.y - dragStart.y);
+    redraw();
+  }
+}, false);
+canv.addEventListener("mouseup", function (evt) {
+  dragStart = null;
+  if (!dragged) zoom(evt.shiftKey ? -1 : 1);
+}, false);
+var scaleFactor = 1.1;
+var zoom = function (clicks) {
+  var pt = context.transformedPoint(lastX, lastY);
+  context.translate(pt.x, pt.y);
+  var factor = Math.pow(scaleFactor, clicks);
+  context.scale(factor, factor);
+  context.translate(-pt.x, -pt.y);
+  draw();
+};
+var handleScroll = function (evt) {
+  var delta = evt.wheelDelta ? evt.wheelDelta / 40 : evt.detail ? -evt.detail : 0;
+  if (delta) {
+    zoom(delta);
+    console.log("zooming");
+  }
+  return evt.preventDefault() && false;
+};
+canv.addEventListener("DOMMouseScroll", handleScroll, false);
+canv.addEventListener("mousewheel", handleScroll, false);
+var updateNDraw = function () {
+  update();
+  draw();
+  requestAnimationFrame(updateNDraw);
+};
+function trackTransforms(ctx) {
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  var xform = svg.createSVGMatrix();
+  ctx.getTransform = function () {
+    return xform;
+  };
+  var savedTransforms = [];
+  var save = ctx.save;
+  ctx.save = function () {
+    savedTransforms.push(xform.translate(0, 0));
+    return save.call(ctx);
+  };
+  var restore = ctx.restore;
+  ctx.restore = function () {
+    xform = savedTransforms.pop();
+    return restore.call(ctx);
+  };
+  var scale = ctx.scale;
+  ctx.scale = function (sx, sy) {
+    xform = xform.scaleNonUniform(sx, sy);
+    return scale.call(ctx, sx, sy);
+  };
+  var rotate = ctx.rotate;
+  ctx.rotate = function (radians) {
+    xform = xform.rotate(radians * 180 / Math.PI);
+    return rotate.call(ctx, radians);
+  };
+  var translate = ctx.translate;
+  ctx.translate = function (dx, dy) {
+    xform = xform.translate(dx, dy);
+    return translate.call(ctx, dx, dy);
+  };
+  var transform = ctx.transform;
+  ctx.transform = function (a, b, c, d, e, f) {
+    var m2 = svg.createSVGMatrix();
+    m2.a = a;
+    m2.b = b;
+    m2.c = c;
+    m2.d = d;
+    m2.e = e;
+    m2.f = f;
+    xform = xform.multiply(m2);
+    return transform.call(ctx, a, b, c, d, e, f);
+  };
+  var setTransform = ctx.setTransform;
+  ctx.setTransform = function (a, b, c, d, e, f) {
+    xform.a = a;
+    xform.b = b;
+    xform.c = c;
+    xform.d = d;
+    xform.e = e;
+    xform.f = f;
+    return setTransform.call(ctx, a, b, c, d, e, f);
+  };
+  var pt = svg.createSVGPoint();
+  ctx.transformedPoint = function (x, y) {
+    pt.x = x;
+    pt.y = y;
+    return pt.matrixTransform(xform.inverse());
+  };
+}
+// function mainLoop() {
+// setTimeout(updateNDraw, 1000 / 60);
+// }
+trackTransforms(context);
+var translateX = canv.width / 2;
+var translateY = canv.height / 2;
+// context.translate(translateX, translateY);
+updateNDraw();
+
+},{"./graph.js":"6m5hz","./codeFromGraph.js":"678mq","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6m5hz":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _nodeJs = require("./node.js");
+var _nodeJsDefault = _parcelHelpers.interopDefault(_nodeJs);
+var _edgeJs = require("./edge.js");
+var _edgeJsDefault = _parcelHelpers.interopDefault(_edgeJs);
+class Graph {
+  constructor() {
+    this.nodes = [];
+    this.edges = [];
+    this.encoding = [];
+  }
+  nextId() {
+    return Math.max.apply(Math, this.nodes.map(x => x.id)) + 1;
+  }
+  addVertex() {
+    var indexOfNeighbor = Math.floor(Math.random() * this.nodes.length);
+    var newnode;
+    if (this.nodes.length == 0) {
+      newnode = new _nodeJsDefault.default(0);
+    } else {
+      newnode = new _nodeJsDefault.default(this.nextId());
+      newnode.secondaryConstructor(this.nodes[indexOfNeighbor]);
+      this.encoding.push(indexOfNeighbor);
+      console.log("pushed " + indexOfNeighbor);
+    }
+    this.nodes.push(newnode);
+    if (this.nodes.length != 1) {
+      this.edges.push(new _edgeJsDefault.default(this.nodes[indexOfNeighbor], this.nodes[newnode.id]));
+    }
+  }
+  addVertexId(id) {
+    var newnode;
+    newnode = new _nodeJsDefault.default(this.nextId());
+    newnode.secondaryConstructor(this.nodes[id]);
+    this.nodes.push(newnode);
+    if (this.nodes.length != 1) {
+      this.edges.push(new _edgeJsDefault.default(this.nodes[id], this.nodes[newnode.id]));
+    }
+  }
+  removeVertex() {
+    let indexToRemove = this.nextId() - 1;
+    this.encoding.pop();
+    for (var i = 0; i < this.nodes[indexToRemove].neighbors.length; i++) {
+      var neighbor = this.nodes[indexToRemove].neighbors[i];
+      neighbor.degree -= 1;
+      let index = neighbor.neighbors.indexOf(this.nodes[indexToRemove]);
+      neighbor.neighbors.splice(index, 1);
+    }
+    for (var i = 0; i < this.edges.length; i++) {
+      var edge = this.edges[i];
+      if (edge.node1.id == indexToRemove || edge.node2.id == indexToRemove) {
+        this.edges.splice(i, 1);
+        console.log("removed edge");
+      }
+    }
+    this.nodes.splice(indexToRemove, 1);
+  }
+}
+exports.default = Graph;
+
+},{"./node.js":"3rpHq","./edge.js":"3HbWb","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3rpHq":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+class Node {
+  constructor(id) {
+    this.id = id;
+    this.neighbors = [];
+    this.degree = 0;
+    this.x = 0;
+    this.y = 0;
+    this.nextX = this.x;
+    this.nextY = this.y;
+  }
+  secondaryConstructor(neighbor) {
+    this.neighbors.push(neighbor);
+    this.degree = 1;
+    neighbor.neighbors.push(this);
+    neighbor.degree += 1;
+    this.x = Math.random() - 0.5;
+    this.y = Math.random() - 0.5;
+    this.nextX = this.x;
+    this.nextY = this.y;
+  }
+}
+exports.default = Node;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5gA8y":[function(require,module,exports) {
+"use strict";
+
+exports.interopDefault = function (a) {
+  return a && a.__esModule ? a : {
+    default: a
+  };
+};
+
+exports.defineInteropFlag = function (a) {
+  Object.defineProperty(a, '__esModule', {
+    value: true
+  });
+};
+
+exports.exportAll = function (source, dest) {
+  Object.keys(source).forEach(function (key) {
+    if (key === 'default' || key === '__esModule') {
+      return;
+    } // Skip duplicate re-exports when they have the same value.
+
+
+    if (key in dest && dest[key] === source[key]) {
+      return;
+    }
+
+    Object.defineProperty(dest, key, {
+      enumerable: true,
+      get: function () {
+        return source[key];
+      }
+    });
+  });
+  return dest;
+};
+
+exports.export = function (dest, destName, get) {
+  Object.defineProperty(dest, destName, {
+    enumerable: true,
+    get: get
+  });
+};
+},{}],"3HbWb":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+require("./node.js");
+class Edge {
+  constructor(node1, node2) {
+    if (node1.id >= node2.id) {
+      throw "invalid edge " + node1.id + " " + node2.id;
+    }
+    this.node1 = node1;
+    this.node2 = node2;
+  }
+}
+exports.default = Edge;
+
+},{"./node.js":"3rpHq","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"678mq":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "graphFromEncoding", function () {
+  return graphFromEncoding;
+});
+_parcelHelpers.export(exports, "codeFromGraph", function () {
+  return codeFromGraph;
+});
+_parcelHelpers.export(exports, "smallestLeaf", function () {
+  return smallestLeaf;
+});
+_parcelHelpers.export(exports, "smallestNeighbor", function () {
+  return smallestNeighbor;
+});
+_parcelHelpers.export(exports, "reduce", function () {
+  return reduce;
+});
+var _graphJs = require("./graph.js");
+var _graphJsDefault = _parcelHelpers.interopDefault(_graphJs);
+function graphFromEncoding(encoding) {
+  var copyGraph = new _graphJsDefault.default();
+  copyGraph.addVertex();
+  for (var i = 0; i < encoding.length; i++) {
+    copyGraph.addVertexId(encoding[i]);
+  }
+  if (copyGraph.nodes.length - 1 != copyGraph.edges.length) {
+    throw "incorrect construction from copy";
+  }
+  return copyGraph;
+}
+function codeFromGraph(graph) {
+  var graphCopy = graphFromEncoding(graph.encoding);
+  var result = "";
+  while (graphCopy.nodes.length > 2) {
+    let u = smallestLeaf(graphCopy);
+    console.log("smallest leaf id= " + u.id);
+    let i = smallestNeighbor(graphCopy, u);
+    console.log("smallestNeighbor id= " + i.id);
+    console.log("");
+    result = result + " " + i.id;
+    reduce(graphCopy, u);
+  }
+  console.log(result);
+  return result;
+}
+function smallestLeaf(graphCopy) {
+  console.log("trying to find smallest leaf with " + graphCopy.nodes.length + " nodes");
+  for (var j = 0; j < graphCopy.nodes.length; j++) {
+    let noder = graphCopy.nodes[j];
+    if (noder.degree == 1) return noder;
+  }
+  throw "couldn't find a leaf in smallestLeaf subroutine";
+}
+function smallestNeighbor(graphCopy, vertex) {
+  var id = Math.min.apply(Math, vertex.neighbors.map(x => x.id));
+  for (var i = 0; i < vertex.neighbors.length; i++) {
+    if (vertex.neighbors[i].id == id) return vertex.neighbors[i];
+  }
+  throw "coudln't find a smallest neighbor in smallestNeighbor subroutine";
+}
+function reduce(graphCopy, vertex) {
+  let indexToRemove = vertex.id;
+  console.log("remove vertex id " + vertex.id);
+  for (var i = 0; i < vertex.neighbors.length; i++) {
+    let neighbor = vertex.neighbors[i];
+    neighbor.degree = neighbor.degree - 1;
+    let index = neighbor.neighbors.indexOf(vertex);
+    neighbor.neighbors.splice(index, 1);
+  }
+  for (var i = 0; i < graphCopy.edges.length; i++) {
+    var edge = graphCopy.edges[i];
+    if (edge.node1.id == indexToRemove || edge.node2.id == indexToRemove) {
+      graphCopy.edges.splice(i, 1);
+      console.log("removed edge");
+    }
+  }
+  let indexinArrayToRemove = -1;
+  for (var i = 0; i < graphCopy.nodes.length; i++) {
+    if (graphCopy.nodes[i].id == vertex.id) {
+      indexinArrayToRemove = i;
+    }
+  }
+  if (indexinArrayToRemove == -1) {
+    throw "coudln't find edge-to-remove in array with id = " + vertex.id;
+  }
+  graphCopy.nodes.splice(indexinArrayToRemove, 1);
+}
+
+},{"./graph.js":"6m5hz","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["21c8X","3L8AI"], "3L8AI", "parcelRequire513d")
+
+//# sourceMappingURL=index.HASH_REF_062e9a7565ca912a5f7d6b832142d36c.js.map
