@@ -1,0 +1,24 @@
+{
+  "name": "graphpruffercodes",
+  "version": "1.0.0",
+  "description": "from-scratch real-time random tree embedding with Pruffer code generation",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelnykEugene/GraphPrufferCodes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelnykEugene/GraphPrufferCodes/issues"
+  },
+  "homepage": "https://github.com/MelnykEugene/GraphPrufferCodes#readme",
+  "devDependencies": {
+    "parcel": "*"
+  }
+}

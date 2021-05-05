@@ -1,0 +1,60 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _nodeJs = require("./node.js");
+var _nodeJsDefault = _parcelHelpers.interopDefault(_nodeJs);
+var _edgeJs = require("./edge.js");
+var _edgeJsDefault = _parcelHelpers.interopDefault(_edgeJs);
+class Graph {
+  constructor() {
+    this.nodes = [];
+    this.edges = [];
+    this.encoding = [];
+  }
+  nextId() {
+    return Math.max.apply(Math, this.nodes.map(x => x.id)) + 1;
+  }
+  addVertex() {
+    var indexOfNeighbor = Math.floor(Math.random() * this.nodes.length);
+    var newnode;
+    if (this.nodes.length == 0) {
+      newnode = new _nodeJsDefault.default(0);
+    } else {
+      newnode = new _nodeJsDefault.default(this.nextId());
+      newnode.secondaryConstructor(this.nodes[indexOfNeighbor]);
+      this.encoding.push(indexOfNeighbor);
+      console.log("pushed " + indexOfNeighbor);
+    }
+    this.nodes.push(newnode);
+    if (this.nodes.length != 1) {
+      this.edges.push(new _edgeJsDefault.default(this.nodes[indexOfNeighbor], this.nodes[newnode.id]));
+    }
+  }
+  addVertexId(id) {
+    var newnode;
+    newnode = new _nodeJsDefault.default(this.nextId());
+    newnode.secondaryConstructor(this.nodes[id]);
+    this.nodes.push(newnode);
+    if (this.nodes.length != 1) {
+      this.edges.push(new _edgeJsDefault.default(this.nodes[id], this.nodes[newnode.id]));
+    }
+  }
+  removeVertex() {
+    let indexToRemove = this.nextId() - 1;
+    this.encoding.pop();
+    for (var i = 0; i < this.nodes[indexToRemove].neighbors.length; i++) {
+      var neighbor = this.nodes[indexToRemove].neighbors[i];
+      neighbor.degree -= 1;
+      let index = neighbor.neighbors.indexOf(this.nodes[indexToRemove]);
+      neighbor.neighbors.splice(index, 1);
+    }
+    for (var i = 0; i < this.edges.length; i++) {
+      var edge = this.edges[i];
+      if (edge.node1.id == indexToRemove || edge.node2.id == indexToRemove) {
+        this.edges.splice(i, 1);
+        console.log("removed edge");
+      }
+    }
+    this.nodes.splice(indexToRemove, 1);
+  }
+}
+exports.default = Graph;

@@ -1,0 +1,70 @@
+html,
+body {
+  touch-action: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  overflow: hidden;
+}
+
+#controls {
+  display: flex;
+  height: 20%;
+  width: 10%;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 40%;
+  left: 2%;
+}
+.controls {
+  border-radius: 20px;
+  border: rgb(51, 51, 51) solid 1px;
+  background-color: rgb(226, 240, 217);
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+
+#addVertex {
+}
+#removeVertex {
+}
+
+#generateMany {
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  display: inline-block;
+}
+#generateMany:focus {
+  outline-width: 0;
+}
+#generateMany:first-line {
+  display: inline-block;
+}
+
+#code {
+  text-align: center;
+  font-family: "Courier New";
+  position: absolute;
+  top: 0;
+  margin-left: 1%;
+}
+
+::placeholder {
+  opacity: 0.5;
+}
+
+#myCanvas {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -2;
+}
+
+/*# sourceMappingURL=index.HASH_REF_fe692801b07b3f6b4c2872127a9ebcaf.css.map */

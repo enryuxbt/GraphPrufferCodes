@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Pruffer codes</title>
+		<link rel="stylesheet" type="text/css" href="438f3daa8d605e96421f9a3a6805c420">
+		<link rel="preconnect" href="d7c2b8c89e8843c0697300fa104dd24b">
+<link href="d54ec98a4822a54ee2e872b85b38eb15" rel="stylesheet">
+	</head>
+<body>
+	<p id="code"><strong>Pruffer Code: </strong></p>
+	<div id="controls">
+		<button class="controls" id="addVertex">add vertex</button>
+		<button class="controls" id="removeVertex">remove vertex</button>
+		<input class="controls" type="text" id="generateMany" placeholder="#nodes">
+		<p>double click to reset camera</p>
+	</div>
+
+	<canvas id="myCanvas" width="1680" height="1050"></canvas>
+	 <script src="ad96325dc557090d8a9f76a60067201c"></script>
+</body>
+</html>
