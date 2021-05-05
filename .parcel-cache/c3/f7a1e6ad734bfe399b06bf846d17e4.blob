@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Pruffer codes</title>
+		<link rel="stylesheet" type="text/css" href="/index.HASH_REF_fe692801b07b3f6b4c2872127a9ebcaf.css">
+	</head>
+<body>
+	<p id="code"><strong>Pruffer Code: </strong></p>
+	<div id="controls">
+		<button class="controls" id="addVertex">add vertex</button>
+		<button class="controls" id="removeVertex">remove vertex</button>
+		<input class="controls" type="text" id="generateMany" placeholder="#nodes">
+	</div>
+
+	<canvas id="myCanvas" width="1680" height="1050"></canvas>
+	 <script src="/index.HASH_REF_062e9a7565ca912a5f7d6b832142d36c.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+html,
+body {
+  touch-action: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.controls {
+  display: inline-block;
+}
+
+#addVertex {
+  position: fixed;
+  top: 0px;
+  height: 10%;
+  border-radius: 0px 0px 0px 0px;
+  border-color: black;
+}
+#removeVertex {
+  position: fixed;
+  top: 0px;
+  height: 10%;
+  border-radius: 0px 0px 0px 0px;
+  border-color: black;
+}
+#code {
+  position: fixed;
+  top: 20%;
+  text-align: center;
+  font-family: "Courier New";
+}
+
+#generateMany {
+  position: fixed;
+  top: 0px;
+  width: 10%;
+  background-color: red;
+  border-color: black;
+  height: 10%;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+#myCanvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}

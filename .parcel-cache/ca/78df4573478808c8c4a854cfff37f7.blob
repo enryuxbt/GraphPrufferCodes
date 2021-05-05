@@ -1,0 +1,13 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+require("./node.js");
+class Edge {
+  constructor(node1, node2) {
+    if (node1.id >= node2.id) {
+      throw "invalid edge " + node1.id + " " + node2.id;
+    }
+    this.node1 = node1;
+    this.node2 = node2;
+  }
+}
+exports.default = Edge;

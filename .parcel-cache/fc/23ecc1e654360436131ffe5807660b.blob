@@ -1,0 +1,24 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+class Node {
+  constructor(id) {
+    this.id = id;
+    this.neighbors = [];
+    this.degree = 0;
+    this.x = 0;
+    this.y = 0;
+    this.nextX = this.x;
+    this.nextY = this.y;
+  }
+  secondaryConstructor(neighbor) {
+    this.neighbors.push(neighbor);
+    this.degree = 1;
+    neighbor.neighbors.push(this);
+    neighbor.degree += 1;
+    this.x = Math.random() * 1680;
+    this.y = Math.random() * 1050;
+    this.nextX = this.x;
+    this.nextY = this.y;
+  }
+}
+exports.default = Node;

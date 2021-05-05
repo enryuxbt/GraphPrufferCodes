@@ -1,0 +1,60 @@
+body {
+  touch-action: none;
+}
+
+#addVertex {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 45%;
+  height: 60px;
+  border-radius: 0px 0px 0px 0px;
+  border-color: black;
+}
+#removeVertex {
+  position: fixed;
+  left: 45%;
+  top: 0px;
+  width: 45%;
+  height: 60px;
+  border-radius: 0px 0px 0px 0px;
+  border-color: black;
+}
+#code {
+  position: fixed;
+  top: 20%;
+  text-align: center;
+  font-family: "Courier New";
+}
+
+#generateMany {
+  position: fixed;
+  left: 90%;
+  top: 0px;
+  width: 10%;
+  background-color: red;
+  border-radius: 0px 0px 0px 0px;
+  border-color: black;
+  height: 54px;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+#controls {
+  height: 5%;
+}
+
+#myCavas {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 95%;
+  width: 100%;
+}
+
+/*# sourceMappingURL=index.HASH_REF_fe692801b07b3f6b4c2872127a9ebcaf.css.map */
